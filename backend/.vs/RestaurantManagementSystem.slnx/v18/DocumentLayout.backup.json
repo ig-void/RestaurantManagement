@@ -1,0 +1,140 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\step2gen\\AI\\backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CFD60F26-8D22-9621-C244-D44E7144A8D9}|RestaurantManagementSystem.Core\\RestaurantManagementSystem.Core.csproj|c:\\step2gen\\ai\\backend\\restaurantmanagementsystem.core\\application\\features\\reservations\\commands\\cancelreservationcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFD60F26-8D22-9621-C244-D44E7144A8D9}|RestaurantManagementSystem.Core\\RestaurantManagementSystem.Core.csproj|solutionrelative:restaurantmanagementsystem.core\\application\\features\\reservations\\commands\\cancelreservationcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFD60F26-8D22-9621-C244-D44E7144A8D9}|RestaurantManagementSystem.Core\\RestaurantManagementSystem.Core.csproj|c:\\step2gen\\ai\\backend\\restaurantmanagementsystem.core\\application\\servicecontracts\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFD60F26-8D22-9621-C244-D44E7144A8D9}|RestaurantManagementSystem.Core\\RestaurantManagementSystem.Core.csproj|solutionrelative:restaurantmanagementsystem.core\\application\\servicecontracts\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CFD60F26-8D22-9621-C244-D44E7144A8D9}|RestaurantManagementSystem.Core\\RestaurantManagementSystem.Core.csproj|c:\\step2gen\\ai\\backend\\restaurantmanagementsystem.core\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CFD60F26-8D22-9621-C244-D44E7144A8D9}|RestaurantManagementSystem.Core\\RestaurantManagementSystem.Core.csproj|solutionrelative:restaurantmanagementsystem.core\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1728A99F-A478-C8C2-3EB3-C86D78741A3B}|RestaurantManagementSystem.WebApi\\RestaurantManagementSystem.WebApi.csproj|c:\\step2gen\\ai\\backend\\restaurantmanagementsystem.webapi\\restaurantmanagementsystem.webapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{1728A99F-A478-C8C2-3EB3-C86D78741A3B}|RestaurantManagementSystem.WebApi\\RestaurantManagementSystem.WebApi.csproj|solutionrelative:restaurantmanagementsystem.webapi\\restaurantmanagementsystem.webapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8853ED79-5325-8568-6707-E7567F8CF3FD}|RestaurantManagementSystem.Infrastructure\\RestaurantManagementSystem.Infrastructure.csproj|c:\\step2gen\\ai\\backend\\restaurantmanagementsystem.infrastructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8853ED79-5325-8568-6707-E7567F8CF3FD}|RestaurantManagementSystem.Infrastructure\\RestaurantManagementSystem.Infrastructure.csproj|solutionrelative:restaurantmanagementsystem.infrastructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8853ED79-5325-8568-6707-E7567F8CF3FD}|RestaurantManagementSystem.Infrastructure\\RestaurantManagementSystem.Infrastructure.csproj|c:\\step2gen\\ai\\backend\\restaurantmanagementsystem.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8853ED79-5325-8568-6707-E7567F8CF3FD}|RestaurantManagementSystem.Infrastructure\\RestaurantManagementSystem.Infrastructure.csproj|solutionrelative:restaurantmanagementsystem.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Infrastructure\\Services\\PasswordHasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:RestaurantManagementSystem.Infrastructure\\Services\\PasswordHasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CancelReservationCommand.cs",
+              "DocumentMoniker": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Core\\Application\\Features\\Reservations\\Commands\\CancelReservationCommand.cs",
+              "RelativeDocumentMoniker": "RestaurantManagementSystem.Core\\Application\\Features\\Reservations\\Commands\\CancelReservationCommand.cs",
+              "ToolTip": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Core\\Application\\Features\\Reservations\\Commands\\CancelReservationCommand.cs",
+              "RelativeToolTip": "RestaurantManagementSystem.Core\\Application\\Features\\Reservations\\Commands\\CancelReservationCommand.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAtwEwAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-16T04:29:50.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IEmailService.cs",
+              "DocumentMoniker": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Core\\Application\\ServiceContracts\\IEmailService.cs",
+              "RelativeDocumentMoniker": "RestaurantManagementSystem.Core\\Application\\ServiceContracts\\IEmailService.cs",
+              "ToolTip": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Core\\Application\\ServiceContracts\\IEmailService.cs",
+              "RelativeToolTip": "RestaurantManagementSystem.Core\\Application\\ServiceContracts\\IEmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-16T04:29:37.823Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Core\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "RestaurantManagementSystem.Core\\DependencyInjection.cs",
+              "ToolTip": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Core\\DependencyInjection.cs",
+              "RelativeToolTip": "RestaurantManagementSystem.Core\\DependencyInjection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-16T04:29:26.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PasswordHasher.cs",
+              "DocumentMoniker": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Infrastructure\\Services\\PasswordHasher.cs",
+              "RelativeDocumentMoniker": "RestaurantManagementSystem.Infrastructure\\Services\\PasswordHasher.cs",
+              "ToolTip": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Infrastructure\\Services\\PasswordHasher.cs",
+              "RelativeToolTip": "RestaurantManagementSystem.Infrastructure\\Services\\PasswordHasher.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-15T10:50:34.521Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Infrastructure\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "RestaurantManagementSystem.Infrastructure\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Infrastructure\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "RestaurantManagementSystem.Infrastructure\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAG4AAAAAAAAAAAAYwJMAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-15T10:32:04.399Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Infrastructure\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "RestaurantManagementSystem.Infrastructure\\DependencyInjection.cs",
+              "ToolTip": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.Infrastructure\\DependencyInjection.cs",
+              "RelativeToolTip": "RestaurantManagementSystem.Infrastructure\\DependencyInjection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-15T10:31:57.305Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RestaurantManagementSystem.WebApi.csproj",
+              "DocumentMoniker": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.WebApi\\RestaurantManagementSystem.WebApi.csproj",
+              "RelativeDocumentMoniker": "RestaurantManagementSystem.WebApi\\RestaurantManagementSystem.WebApi.csproj",
+              "ToolTip": "C:\\step2gen\\AI\\backend\\RestaurantManagementSystem.WebApi\\RestaurantManagementSystem.WebApi.csproj",
+              "RelativeToolTip": "RestaurantManagementSystem.WebApi\\RestaurantManagementSystem.WebApi.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-07-15T10:30:10.396Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

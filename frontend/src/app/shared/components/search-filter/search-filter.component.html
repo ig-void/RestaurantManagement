@@ -1,0 +1,25 @@
+<div class="flex flex-wrap items-center gap-4 w-full mb-6">
+  <div class="flex-1 min-w-[250px]">
+    <input 
+      type="text" 
+      class="form-input-field" 
+      [placeholder]="placeholder()" 
+      [value]="searchVal"
+      (input)="onSearchChange($any($event.target).value)" />
+  </div>
+  
+  <div class="flex flex-wrap gap-3">
+    @for (f of dropdowns(); track f.key) {
+      <div class="min-w-[150px]">
+        <select 
+          class="form-input-field cursor-pointer" 
+          (change)="onFilterChange(f.key, $any($event.target).value)">
+          <option value="">All {{ f.label }}</option>
+          @for (opt of f.options; track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        </select>
+      </div>
+    }
+  </div>
+</div>

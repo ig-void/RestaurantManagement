@@ -1,0 +1,155 @@
+<div class="relative min-h-[calc(100vh-70px)] flex items-center justify-center p-6 overflow-hidden">
+  <!-- Glowing Aurora background effects -->
+  <div class="aurora-glow-1"></div>
+  <div class="aurora-glow-2"></div>
+  
+  <div class="glass-card max-w-[550px] w-full p-8 md:p-10 my-4">
+    <h2 class="text-center text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight mb-2">Create Account</h2>
+    <p class="text-center text-sm text-slate-500 dark:text-slate-400 mb-8 font-medium">Join us to reserve tables at top restaurants</p>
+
+    @if (successMessage()) {
+      <div class="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 rounded-xl text-sm font-semibold">
+        {{ successMessage() }}
+      </div>
+    }
+    @if (errorMessage()) {
+      <div class="mb-6 p-4 bg-red-500/10 border border-red-500/25 text-red-550 dark:text-red-400 rounded-xl text-sm font-semibold animate-pulse">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+      <!-- Full Name -->
+      <div class="flex flex-col gap-1">
+        <label for="fullName" class="form-label-field">Full Name</label>
+        <input 
+          type="text" 
+          id="fullName" 
+          formControlName="fullName"
+          class="form-input-field" 
+          placeholder="e.g. John Doe" />
+        @if (registerForm.get('fullName')?.invalid && (registerForm.get('fullName')?.dirty || registerForm.get('fullName')?.touched)) {
+          <div class="form-error-field">
+            Full name is required (max 100 characters, letters and spaces only).
+          </div>
+        }
+      </div>
+
+      <!-- Email Address -->
+      <div class="flex flex-col gap-1">
+        <label for="email" class="form-label-field">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email"
+          class="form-input-field" 
+          placeholder="e.g. john.doe@example.com" />
+        @if (registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)) {
+          <div class="form-error-field">
+            Please enter a valid email address (max 100 characters).
+          </div>
+        }
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Phone Number -->
+        <div class="flex flex-col gap-1">
+          <label for="phoneNumber" class="form-label-field">Phone Number</label>
+          <input 
+            type="text" 
+            id="phoneNumber" 
+            formControlName="phoneNumber"
+            class="form-input-field" 
+            placeholder="10 digit number" />
+          @if (registerForm.get('phoneNumber')?.invalid && (registerForm.get('phoneNumber')?.dirty || registerForm.get('phoneNumber')?.touched)) {
+            <div class="form-error-field">
+              Must be exactly 10 digits.
+            </div>
+          }
+        </div>
+
+        <!-- City -->
+        <div class="flex flex-col gap-1">
+          <label for="city" class="form-label-field">City</label>
+          <input 
+            type="text" 
+            id="city" 
+            formControlName="city"
+            class="form-input-field" 
+            placeholder="e.g. New York" />
+          @if (registerForm.get('city')?.invalid && (registerForm.get('city')?.dirty || registerForm.get('city')?.touched)) {
+            <div class="form-error-field">
+              City is required (max 50 characters).
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Password -->
+        <div class="flex flex-col gap-1">
+          <label for="password" class="form-label-field">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password"
+            class="form-input-field" 
+            placeholder="8-24 chars" />
+          @if (registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)) {
+            <div class="form-error-field">
+              Must be 8-24 chars with 1 uppercase, 1 lowercase, 1 number, 1 special character.
+            </div>
+          }
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="flex flex-col gap-1">
+          <label for="confirmPassword" class="form-label-field">Confirm Password</label>
+          <input 
+            type="password" 
+            id="confirmPassword" 
+            formControlName="confirmPassword"
+            class="form-input-field" 
+            placeholder="Repeat password" />
+          @if (registerForm.hasError('passwordMismatch') && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)) {
+            <div class="form-error-field">
+              Passwords do not match.
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Dietary Preferences Checkboxes -->
+      <div class="flex flex-col gap-1">
+        <label class="form-label-field">Dietary Preferences (Optional)</label>
+        <div class="grid grid-cols-2 gap-3 py-1">
+          @for (option of dietaryOptions(); track option.key) {
+            <div class="flex items-center gap-2">
+              <input 
+                type="checkbox" 
+                [id]="option.key" 
+                [checked]="option.selected"
+                (change)="toggleDietaryOption(option)"
+                class="w-4 h-4 text-primary focus:ring-primary border-slate-300 dark:border-slate-700 rounded-sm cursor-pointer" />
+              <label [for]="option.key" class="text-sm text-slate-600 dark:text-slate-400 cursor-pointer select-none">
+                {{ option.label }}
+              </label>
+            </div>
+          }
+        </div>
+      </div>
+
+      <button 
+        type="submit" 
+        class="w-full mt-2 py-3 rounded-xl bg-primary hover:bg-primary-hover text-slate-950 font-bold text-base shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer" 
+        [disabled]="registerForm.invalid || loading()">
+        {{ loading() ? 'Registering...' : 'Register' }}
+      </button>
+    </form>
+
+    <div class="text-center mt-6 text-sm">
+      <span class="text-slate-500 dark:text-slate-400">Already have an account? </span>
+      <a routerLink="/login" class="text-primary hover:text-primary-hover font-bold no-underline">Login here</a>
+    </div>
+  </div>
+</div>

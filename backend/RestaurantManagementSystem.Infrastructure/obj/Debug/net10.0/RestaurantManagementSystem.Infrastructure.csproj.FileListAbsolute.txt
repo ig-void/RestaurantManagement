@@ -1,0 +1,17 @@
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\bin\Debug\net10.0\RestaurantManagementSystem.Infrastructure.deps.json
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\bin\Debug\net10.0\RestaurantManagementSystem.Infrastructure.runtimeconfig.json
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\bin\Debug\net10.0\RestaurantManagementSystem.Infrastructure.dll
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\bin\Debug\net10.0\RestaurantManagementSystem.Infrastructure.pdb
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\bin\Debug\net10.0\RestaurantManagementSystem.Core.dll
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\bin\Debug\net10.0\RestaurantManagementSystem.Core.pdb
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\RestaurantManagementSystem.Infrastructure.csproj.AssemblyReference.cache
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\RestaurantManagementSystem.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\RestaurantManagementSystem.Infrastructure.AssemblyInfoInputs.cache
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\RestaurantManagementSystem.Infrastructure.AssemblyInfo.cs
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\RestaurantManagementSystem.Infrastructure.csproj.CoreCompileInputs.cache
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\Restaura.C564B669.Up2Date
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\RestaurantManagementSystem.Infrastructure.dll
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\refint\RestaurantManagementSystem.Infrastructure.dll
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\RestaurantManagementSystem.Infrastructure.pdb
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\RestaurantManagementSystem.Infrastructure.genruntimeconfig.cache
+C:\step2gen\AI\backend\RestaurantManagementSystem.Infrastructure\obj\Debug\net10.0\ref\RestaurantManagementSystem.Infrastructure.dll

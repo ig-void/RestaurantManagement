@@ -1,0 +1,194 @@
+<div class="max-w-7xl mx-auto px-4 py-8 relative">
+  <div class="aurora-glow-1"></div>
+  <div class="aurora-glow-2"></div>
+  
+  <h2 class="text-3xl font-extrabold text-slate-800 dark:text-slate-100 mb-1.5 tracking-tight">Browse Restaurants</h2>
+  <p class="text-sm text-slate-500 dark:text-slate-400 mb-8 font-medium">Find your favorite cuisines and request table reservations in real-time</p>
+
+  <!-- Reusable Filter Component -->
+  <app-search-filter 
+    placeholder="Search by restaurant name, city or address..."
+    [dropdowns]="filters()"
+    (search)="onSearch($event)"
+    (filterChange)="onFilterChange($event)">
+  </app-search-filter>
+
+  @if (loading()) {
+    <div class="text-center my-16 text-primary font-bold text-lg animate-pulse">
+      Loading restaurants...
+    </div>
+  }
+
+  @if (!loading() && restaurants().length === 0) {
+    <div class="glass-card text-center p-12 my-8">
+      <p class="text-slate-500 dark:text-slate-400 font-semibold text-lg">No restaurants found matching your criteria.</p>
+    </div>
+  }
+
+  @if (!loading() && restaurants().length > 0) {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      @for (r of restaurants(); track r.id) {
+        <div 
+          [class.opacity-50]="r.status === 'Inactive'"
+          class="glass-card flex flex-col h-full p-6">
+          
+          <div class="flex justify-between items-start mb-4 gap-2">
+            <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">{{ r.name }}</h3>
+            <app-status-badge [status]="r.status"></app-status-badge>
+          </div>
+
+          <div class="flex-1 flex flex-col gap-2.5 text-sm border-t border-slate-200 dark:border-slate-800/40 pt-4 mb-5">
+            <div class="flex justify-between">
+              <span class="text-slate-500 dark:text-slate-400 font-medium">Cuisine:</span>
+              <span class="text-primary font-bold">{{ r.cuisineTypeName }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-500 dark:text-slate-400 font-medium">Location:</span>
+              <span class="text-slate-800 dark:text-slate-200 font-semibold text-right max-w-[180px] truncate" [title]="r.address + ', ' + r.city">{{ r.address }}, {{ r.city }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-500 dark:text-slate-400 font-medium">Hours:</span>
+              <span class="text-slate-800 dark:text-slate-200 font-semibold">{{ r.openingTime }} - {{ r.closingTime }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-500 dark:text-slate-400 font-medium">Avg Cost:</span>
+              <span class="text-slate-800 dark:text-slate-200 font-semibold">{{ r.averageCostPerPerson | currency }} per person</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-500 dark:text-slate-400 font-medium">Available Tables:</span>
+              <span [class.text-red-500]="r.availableTableCount === 0" class="text-slate-850 dark:text-slate-200 font-extrabold">
+                {{ r.availableTableCount }} tables
+              </span>
+            </div>
+          </div>
+
+          <button 
+            class="w-full py-2.5 px-4 rounded-xl bg-primary hover:bg-primary-hover disabled:bg-slate-350 dark:disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-slate-950 font-bold text-sm shadow-md shadow-primary/10 transition-all cursor-pointer" 
+            [disabled]="r.status === 'Inactive'"
+            (click)="openReservationModal(r)">
+            {{ r.status === 'Inactive' ? 'Booking Disabled' : 'Reserve Table' }}
+          </button>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Pagination -->
+  @if (!loading() && totalPages() > 1) {
+    <div class="flex justify-center items-center gap-6 mt-8">
+      <button 
+        class="py-1.5 px-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer" 
+        [disabled]="pageNumber() === 1" 
+        (click)="onPageChange(pageNumber() - 1)">
+        Previous
+      </button>
+      <span class="text-sm text-slate-500 dark:text-slate-400 font-medium">Page {{ pageNumber() }} of {{ totalPages() }}</span>
+      <button 
+        class="py-1.5 px-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer" 
+        [disabled]="pageNumber() === totalPages()" 
+        (click)="onPageChange(pageNumber() + 1)">
+        Next
+      </button>
+    </div>
+  }
+</div>
+
+<!-- Reservation Modal Overlay -->
+@if (showModal()) {
+  <div class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center z-55 transition-opacity duration-200">
+    <div class="glass-card max-w-[500px] w-[90%] p-8" (click)="$event.stopPropagation()">
+      <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-1 leading-tight">Request Table Reservation</h3>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mb-6 font-medium">
+        Submit your request for <strong>{{ selectedRestaurant()?.name }}</strong>. 
+        The operating hours are {{ selectedRestaurant()?.openingTime }} - {{ selectedRestaurant()?.closingTime }}.
+      </p>
+
+      @if (modalError()) {
+        <div class="mb-5 p-3.5 bg-red-500/10 border border-red-500/25 text-red-500 dark:text-red-400 rounded-xl text-xs font-semibold animate-pulse">
+          {{ modalError() }}
+        </div>
+      }
+      @if (modalSuccess()) {
+        <div class="mb-5 p-3.5 bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 rounded-xl text-xs font-semibold">
+          {{ modalSuccess() }}
+        </div>
+      }
+
+      <form [formGroup]="reservationForm" (ngSubmit)="submitReservation()" class="flex flex-col gap-4">
+        <!-- Guest Count -->
+        <div class="flex flex-col gap-1">
+          <label for="guestCount" class="form-label-field">Guest Count (1 - 10)</label>
+          <input 
+            type="number" 
+            id="guestCount" 
+            formControlName="guestCount"
+            class="form-input-field" />
+          @if (reservationForm.get('guestCount')?.invalid && (reservationForm.get('guestCount')?.dirty || reservationForm.get('guestCount')?.touched)) {
+            <div class="form-error-field">
+              Guest count must be between 1 and 10.
+            </div>
+          }
+        </div>
+
+        <!-- Reservation Date -->
+        <div class="flex flex-col gap-1">
+          <label for="reservationDate" class="form-label-field">Reservation Date (Next 30 days)</label>
+          <input 
+            type="date" 
+            id="reservationDate" 
+            formControlName="reservationDate"
+            [min]="minDate"
+            [max]="maxDate"
+            class="form-input-field" />
+          @if (reservationForm.get('reservationDate')?.invalid && (reservationForm.get('reservationDate')?.dirty || reservationForm.get('reservationDate')?.touched)) {
+            <div class="form-error-field">
+              Date is required and must be within the next 30 days.
+            </div>
+          }
+        </div>
+
+        <!-- Reservation Time -->
+        <div class="flex flex-col gap-1">
+          <label for="reservationTime" class="form-label-field">Reservation Time</label>
+          <input 
+            type="time" 
+            id="reservationTime" 
+            formControlName="reservationTime"
+            class="form-input-field" />
+          @if (reservationForm.get('reservationTime')?.invalid && (reservationForm.get('reservationTime')?.dirty || reservationForm.get('reservationTime')?.touched)) {
+            <div class="form-error-field">
+              Time is required.
+            </div>
+          }
+        </div>
+
+        <!-- Special Requests -->
+        <div class="flex flex-col gap-1">
+          <label for="specialRequests" class="form-label-field">Special Requests (Optional)</label>
+          <textarea 
+            id="specialRequests" 
+            formControlName="specialRequests"
+            class="form-input-field" 
+            rows="3"
+            placeholder="e.g. Need high chair, window seat, allergy notes..."></textarea>
+        </div>
+
+        <div class="flex justify-end gap-3 mt-4">
+          <button 
+            type="button" 
+            class="py-2 px-4 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-750 dark:text-slate-300 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer" 
+            (click)="closeModal()" 
+            [disabled]="modalLoading()">
+            Cancel
+          </button>
+          <button 
+            type="submit" 
+            class="py-2 px-5 rounded-xl bg-primary hover:bg-primary-hover text-slate-950 font-bold text-sm shadow-md shadow-primary/20 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer" 
+            [disabled]="reservationForm.invalid || modalLoading()">
+            {{ modalLoading() ? 'Submitting...' : 'Submit Request' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

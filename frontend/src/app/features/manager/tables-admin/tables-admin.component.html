@@ -1,0 +1,98 @@
+<div class="max-w-7xl mx-auto px-4 py-8 relative">
+  <div class="aurora-glow-1"></div>
+  <div class="aurora-glow-2"></div>
+
+  <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+    <div>
+      <h2 class="text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight mb-1.5">Table Administration</h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Manage physical tables, dining capacities and live occupancy statuses</p>
+    </div>
+    <button 
+      class="py-2.5 px-5 rounded-xl bg-primary hover:bg-primary-hover text-slate-950 font-bold text-sm shadow-md shadow-primary/20 hover:shadow-lg transition-all cursor-pointer"
+      (click)="openAddForm()">
+      Add Table
+    </button>
+  </div>
+
+  <!-- Error / Alert banner -->
+  @if (errorMessage()) {
+    <div class="mb-6 p-4 bg-red-500/10 border border-red-500/25 text-red-550 dark:text-red-400 rounded-xl text-sm font-semibold animate-pulse">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <!-- Search Filters -->
+  <div class="flex flex-wrap gap-4 mb-6 items-center">
+    <input 
+      type="text" 
+      class="form-input-field flex-1 min-w-[250px]" 
+      placeholder="Search by table number..."
+      [value]="searchTerm" 
+      (input)="onSearchChange($any($event.target).value)" />
+
+    <select class="form-input-field max-w-[200px]" [(ngModel)]="filterRestaurant" (change)="loadTables()">
+      <option [value]="null">All Restaurants</option>
+      @for (r of restaurants; track r.id) {
+        <option [value]="r.id">{{ r.name }}</option>
+      }
+    </select>
+
+    <select class="form-input-field max-w-[200px]" [(ngModel)]="filterTableType" (change)="loadTables()">
+      <option [value]="null">All Table Types</option>
+      @for (t of tableTypes; track t.id) {
+        <option [value]="t.id">{{ t.name }}</option>
+      }
+    </select>
+
+    <select class="form-input-field max-w-[200px]" [(ngModel)]="filterStatus" (change)="loadTables()">
+      <option [value]="null">All Statuses</option>
+      <option value="Available">Available</option>
+      <option value="Reserved">Reserved</option>
+      <option value="Occupied">Occupied</option>
+      <option value="Maintenance">Maintenance</option>
+    </select>
+  </div>
+
+  <!-- Reusable Grid Component -->
+  <app-server-grid
+    [columns]="columns"
+    [data]="tables()"
+    [totalCount]="totalCount"
+    [pageNumber]="pageNumber()"
+    [pageSize]="pageSize"
+    [loading]="loading()"
+    [actions]="gridActions"
+    (sort)="onSort($event)"
+    (pageChange)="onPageChange($event)"
+    (action)="onGridAction($event)">
+  </app-server-grid>
+
+  <!-- Add / Edit Modal Overlay -->
+  @if (showFormModal()) {
+    <div class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center z-55 transition-opacity duration-200">
+      <div class="glass-card max-w-[550px] w-[90%] p-8" (click)="$event.stopPropagation()">
+        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6">
+          {{ isEditMode ? 'Edit Table' : 'Add New Table' }}
+        </h3>
+
+        <app-dynamic-form
+          [fields]="formFields"
+          [initialData]="editingData()"
+          [submitLabel]="isEditMode ? 'Update Table' : 'Create Table'"
+          [loading]="formLoading()"
+          (submitForm)="onSubmitForm($event)"
+          (cancel)="closeFormModal()">
+        </app-dynamic-form>
+      </div>
+    </div>
+  }
+
+  <!-- Delete Confirmation Dialog -->
+  @if (showDeleteDialog()) {
+    <app-confirm-dialog
+      title="Delete Table"
+      [message]="'Are you sure you want to delete Table \'' + deletingTable()?.tableNumber + '\' in ' + deletingTable()?.restaurantName + '?'"
+      (confirm)="handleConfirmDelete($event)">
+    </app-confirm-dialog>
+  }
+</div>

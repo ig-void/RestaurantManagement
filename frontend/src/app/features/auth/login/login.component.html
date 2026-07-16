@@ -1,0 +1,64 @@
+<div class="relative min-h-[calc(100vh-70px)] flex items-center justify-center p-6 overflow-hidden">
+
+
+  <!-- Glowing Aurora background effects -->
+  <div class="aurora-glow-1"></div>
+  <div class="aurora-glow-2"></div>
+  
+  <div class="glass-card max-w-[420px] w-full p-8 md:p-10">
+    <h2 class="text-center text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight mb-2">Welcome Back</h2>
+    <p class="text-center text-sm text-slate-500 dark:text-slate-400 mb-8 font-medium">Log in to manage or request table reservations</p>
+    
+    @if (errorMessage()) {
+      <div class="mb-6 p-4 bg-red-500/10 border border-red-500/25 text-red-500 dark:text-red-400 rounded-xl text-sm font-semibold animate-pulse">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+      <!-- Email Address -->
+      <div class="flex flex-col gap-1">
+        <label for="email" class="form-label-field">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email"
+          class="form-input-field" 
+          placeholder="e.g. manager@restaurant.com" />
+        @if (loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)) {
+          <div class="form-error-field">
+            Please enter a valid email address.
+          </div>
+        }
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col gap-1">
+        <label for="password" class="form-label-field">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password"
+          class="form-input-field" 
+          placeholder="••••••••" />
+        @if (loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)) {
+          <div class="form-error-field">
+            Password is required.
+          </div>
+        }
+      </div>
+
+      <button 
+        type="submit" 
+        class="w-full mt-2 py-3 rounded-xl bg-primary hover:bg-primary-hover text-slate-950 font-bold text-base shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer" 
+        [disabled]="loginForm.invalid || loading()">
+        {{ loading() ? 'Logging in...' : 'Login' }}
+      </button>
+    </form>
+
+    <div class="text-center mt-6 text-sm">
+      <span class="text-slate-500 dark:text-slate-400">Don't have an account? </span>
+      <a routerLink="/register" class="text-primary hover:text-primary-hover font-bold no-underline">Register here</a>
+    </div>
+  </div>
+</div>

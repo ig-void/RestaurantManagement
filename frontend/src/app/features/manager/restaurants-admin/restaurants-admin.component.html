@@ -1,0 +1,90 @@
+<div class="max-w-7xl mx-auto px-4 py-8 relative">
+  <div class="aurora-glow-1"></div>
+  <div class="aurora-glow-2"></div>
+
+  <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
+    <div>
+      <h2 class="text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight mb-1.5">Restaurant Administration</h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Manage restaurant entities, operating hours, capacity and status</p>
+    </div>
+    <button 
+      class="py-2.5 px-5 rounded-xl bg-primary hover:bg-primary-hover text-slate-950 font-bold text-sm shadow-md shadow-primary/20 hover:shadow-lg transition-all cursor-pointer"
+      (click)="openAddForm()">
+      Add Restaurant
+    </button>
+  </div>
+
+  <!-- Error / Alert banner -->
+  @if (errorMessage()) {
+    <div class="mb-6 p-4 bg-red-500/10 border border-red-500/25 text-red-550 dark:text-red-400 rounded-xl text-sm font-semibold animate-pulse">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <!-- Search Filters -->
+  <div class="flex flex-wrap gap-4 mb-6 items-center">
+    <input 
+      type="text" 
+      class="form-input-field flex-1 min-w-[250px]" 
+      placeholder="Search by restaurant name, city, address..."
+      [value]="searchTerm" 
+      (input)="onSearchChange($any($event.target).value)" />
+
+    <select class="form-input-field max-w-[200px]" [(ngModel)]="filterCuisine" (change)="loadRestaurants()">
+      <option [value]="null">All Cuisines</option>
+      @for (c of cuisines; track c.id) {
+        <option [value]="c.id">{{ c.name }}</option>
+      }
+    </select>
+
+    <select class="form-input-field max-w-[200px]" [(ngModel)]="filterStatus" (change)="loadRestaurants()">
+      <option [value]="null">All Statuses</option>
+      <option value="Active">Active</option>
+      <option value="Inactive">Inactive</option>
+      <option value="Maintenance">Maintenance</option>
+    </select>
+  </div>
+
+  <!-- Reusable Grid Component -->
+  <app-server-grid
+    [columns]="columns"
+    [data]="restaurants()"
+    [totalCount]="totalCount"
+    [pageNumber]="pageNumber()"
+    [pageSize]="pageSize"
+    [loading]="loading()"
+    [actions]="gridActions"
+    (sort)="onSort($event)"
+    (pageChange)="onPageChange($event)"
+    (action)="onGridAction($event)">
+  </app-server-grid>
+
+  <!-- Add / Edit Modal Overlay -->
+  @if (showFormModal()) {
+    <div class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center z-55 transition-opacity duration-200">
+      <div class="glass-card max-w-[600px] w-[90%] p-8" (click)="$event.stopPropagation()">
+        <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-6">
+          {{ isEditMode ? 'Edit Restaurant' : 'Add New Restaurant' }}
+        </h3>
+        
+        <app-dynamic-form
+          [fields]="formFields"
+          [initialData]="editingData()"
+          [submitLabel]="isEditMode ? 'Update Restaurant' : 'Create Restaurant'"
+          [loading]="formLoading()"
+          (submitForm)="onSubmitForm($event)"
+          (cancel)="closeFormModal()">
+        </app-dynamic-form>
+      </div>
+    </div>
+  }
+
+  <!-- Delete Confirmation Dialog -->
+  @if (showDeleteDialog()) {
+    <app-confirm-dialog
+      title="Delete Restaurant"
+      [message]="'Are you sure you want to delete restaurant \'' + deletingRestaurant()?.name + '\'? This is a soft-delete operation and cannot be done if the restaurant has active tables or active reservations.'"
+      (confirm)="handleConfirmDelete($event)">
+    </app-confirm-dialog>
+  }
+</div>

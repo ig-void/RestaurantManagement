@@ -1,0 +1,12 @@
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\obj\Debug\net10.0\RestaurantManagementSystem.Core.csproj.AssemblyReference.cache
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\obj\Debug\net10.0\RestaurantManagementSystem.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\obj\Debug\net10.0\RestaurantManagementSystem.Core.AssemblyInfoInputs.cache
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\obj\Debug\net10.0\RestaurantManagementSystem.Core.AssemblyInfo.cs
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\obj\Debug\net10.0\RestaurantManagementSystem.Core.csproj.CoreCompileInputs.cache
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\bin\Debug\net10.0\RestaurantManagementSystem.Core.deps.json
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\bin\Debug\net10.0\RestaurantManagementSystem.Core.dll
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\bin\Debug\net10.0\RestaurantManagementSystem.Core.pdb
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\obj\Debug\net10.0\RestaurantManagementSystem.Core.dll
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\obj\Debug\net10.0\refint\RestaurantManagementSystem.Core.dll
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\obj\Debug\net10.0\RestaurantManagementSystem.Core.pdb
+C:\step2gen\AI\backend\RestaurantManagementSystem.Core\obj\Debug\net10.0\ref\RestaurantManagementSystem.Core.dll

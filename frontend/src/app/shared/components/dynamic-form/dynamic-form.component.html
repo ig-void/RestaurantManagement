@@ -1,0 +1,79 @@
+@if (form) {
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    @for (field of fields(); track field.key) {
+      <div class="flex flex-col gap-1">
+        <label [for]="field.key" class="form-label-field">
+          {{ field.label }} 
+          @if (field.required) {
+            <span class="text-red-500 font-bold">*</span>
+          }
+        </label>
+        
+        @switch (field.type) {
+          @case ('select') {
+            <select 
+              [id]="field.key"
+              [formControlName]="field.key"
+              class="form-input-field">
+              <option value="">Select {{ field.label }}</option>
+              @for (opt of field.options; track opt.value) {
+                <option [value]="opt.value">{{ opt.label }}</option>
+              }
+            </select>
+          }
+          @case ('checkbox') {
+            <div class="flex items-center gap-2 py-1">
+              <input 
+                type="checkbox" 
+                [id]="field.key" 
+                [formControlName]="field.key"
+                class="w-4 h-4 text-primary focus:ring-primary border-slate-300 dark:border-slate-700 rounded-sm cursor-pointer" />
+              <label [for]="field.key" class="text-sm text-slate-650 dark:text-slate-400 cursor-pointer">Yes</label>
+            </div>
+          }
+          @default {
+            <input 
+              [type]="field.type"
+              [id]="field.key"
+              [formControlName]="field.key"
+              class="form-input-field"
+              [placeholder]="'Enter ' + field.label" />
+          }
+        }
+
+        <!-- Validation Errors -->
+        @if (hasError(field.key)) {
+          <div class="form-error-field">
+            @if (form.get(field.key)?.errors?.['required']) {
+              <span>{{ field.label }} is required.</span>
+            }
+            @if (form.get(field.key)?.errors?.['min']) {
+              <span>{{ field.label }} must be at least {{ field.min }}.</span>
+            }
+            @if (form.get(field.key)?.errors?.['max']) {
+              <span>{{ field.label }} cannot exceed {{ field.max }}.</span>
+            }
+            @if (form.get(field.key)?.errors?.['pattern']) {
+              <span>{{ field.regexMessage || 'Invalid format.' }}</span>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <div class="flex justify-end gap-3 mt-6">
+      <button 
+        type="button" 
+        class="py-2 px-4 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer" 
+        (click)="onCancel()">
+        Cancel
+      </button>
+      <button 
+        type="submit" 
+        class="py-2 px-5 rounded-xl bg-primary hover:bg-primary-hover text-slate-950 font-bold text-sm shadow-md shadow-primary/20 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer" 
+        [disabled]="form.invalid || loading()">
+        {{ submitLabel() }}
+      </button>
+    </div>
+  </form>
+}

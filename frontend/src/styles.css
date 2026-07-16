@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #f59e0b;
+  --color-primary-hover: #d97706;
+  --color-secondary: #10b981;
+  --color-secondary-hover: #059669;
+  --color-danger: #ef4444;
+  --color-danger-hover: #dc2626;
+  --color-warning: #eab308;
+
+  --font-outfit: 'Outfit', 'Inter', system-ui, sans-serif;
+  --animate-aurora-slow: aurora 20s ease infinite;
+}
+
+@keyframes aurora {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+:root {
+  --bg-gradient: radial-gradient(circle at 0% 0%, rgba(14, 165, 233, 0.12), transparent 45%),
+                 radial-gradient(circle at 100% 0%, rgba(16, 185, 129, 0.12), transparent 45%),
+                 radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.12), transparent 45%),
+                 radial-gradient(circle at 0% 100%, rgba(168, 85, 247, 0.12), transparent 45%);
+}
+
+html.dark {
+  --bg-gradient: radial-gradient(circle at 0% 0%, rgba(14, 165, 233, 0.22), transparent 50%),
+                 radial-gradient(circle at 100% 0%, rgba(20, 184, 166, 0.22), transparent 50%),
+                 radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.22), transparent 50%),
+                 radial-gradient(circle at 0% 100%, rgba(168, 85, 247, 0.22), transparent 50%);
+}
+
+html {
+  font-family: var(--font-outfit);
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 min-h-screen transition-colors duration-300;
+  background-image: var(--bg-gradient);
+  background-size: 200% 200%;
+  background-attachment: fixed;
+  animation: aurora 25s ease infinite;
+}
+
+html.dark body {
+  @apply bg-slate-950 text-slate-100;
+}
+
+/* Glassmorphism utility card */
+.glass-card {
+  @apply bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-white/20 dark:border-slate-800/40 rounded-2xl shadow-xl transition-all duration-300;
+}
+
+.glass-card:hover {
+  @apply bg-white/70 dark:bg-slate-900/70 border-white/30 dark:border-slate-800/60 shadow-2xl -translate-y-1;
+}
+
+/* Form input elements */
+.form-input-field {
+  @apply w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-800/40 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all;
+}
+
+.form-label-field {
+  @apply text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1.5;
+}
+
+.form-error-field {
+  @apply text-red-500 text-xs mt-1 font-medium;
+}
+
+/* Aurora glow spots */
+.aurora-glow-1 {
+  @apply absolute top-0 left-0 w-96 h-96 bg-cyan-400/20 dark:bg-cyan-500/10 rounded-full filter blur-3xl -z-10 animate-pulse;
+}
+
+.aurora-glow-2 {
+  @apply absolute bottom-0 right-0 w-96 h-96 bg-emerald-400/20 dark:bg-emerald-500/10 rounded-full filter blur-3xl -z-10 animate-pulse;
+}

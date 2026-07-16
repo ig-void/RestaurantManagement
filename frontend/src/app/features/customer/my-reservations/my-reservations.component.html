@@ -1,0 +1,72 @@
+<div class="max-w-7xl mx-auto px-4 py-8 relative">
+  <div class="aurora-glow-1"></div>
+  <div class="aurora-glow-2"></div>
+
+  <h2 class="text-3xl font-extrabold text-slate-800 dark:text-slate-100 mb-1.5 tracking-tight">My Reservations</h2>
+  <p class="text-sm text-slate-500 dark:text-slate-400 mb-8 font-medium">Track and manage your table reservation requests</p>
+
+  <!-- Reusable Filter Component -->
+  <app-search-filter 
+    placeholder="Search by restaurant name..."
+    (search)="onSearch($event)">
+  </app-search-filter>
+
+  @if (loading()) {
+    <div class="text-center my-16 text-primary font-bold text-lg animate-pulse">
+      Loading reservations...
+    </div>
+  }
+
+  @if (!loading() && reservations().length === 0) {
+    <div class="glass-card text-center p-12 my-8">
+      <p class="text-slate-500 dark:text-slate-400 font-semibold text-lg">You don't have any reservations matching this search.</p>
+    </div>
+  }
+
+  @if (!loading() && reservations().length > 0) {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      @for (res of reservations(); track res.id) {
+        <app-card 
+          [restaurantName]="res.restaurantName"
+          [status]="res.status"
+          [cuisineType]="res.cuisineTypeName"
+          [date]="res.reservationDate"
+          [time]="res.reservationTime"
+          [guestCount]="res.guestCount"
+          [tableNumber]="res.tableNumber"
+          [tableType]="res.tableTypeName"
+          [specialRequests]="res.specialRequests"
+          (cancel)="openConfirmCancelDialog(res)">
+        </app-card>
+      }
+    </div>
+  }
+
+  <!-- Pagination -->
+  @if (!loading() && totalPages() > 1) {
+    <div class="flex justify-center items-center gap-6 mt-8">
+      <button 
+        class="py-1.5 px-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer" 
+        [disabled]="pageNumber() === 1" 
+        (click)="onPageChange(pageNumber() - 1)">
+        Previous
+      </button>
+      <span class="text-sm text-slate-500 dark:text-slate-400 font-medium">Page {{ pageNumber() }} of {{ totalPages() }}</span>
+      <button 
+        class="py-1.5 px-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer" 
+        [disabled]="pageNumber() === totalPages()" 
+        (click)="onPageChange(pageNumber() + 1)">
+        Next
+      </button>
+    </div>
+  }
+</div>
+
+<!-- Confirm Cancel Dialog -->
+@if (showConfirmDialog()) {
+  <app-confirm-dialog
+    title="Cancel Reservation"
+    [message]="'Are you sure you want to cancel your reservation at ' + activeReservation()?.restaurantName + '?'"
+    (confirm)="handleConfirmCancel($event)">
+  </app-confirm-dialog>
+}
