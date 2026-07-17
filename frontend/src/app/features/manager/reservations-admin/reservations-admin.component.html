@@ -44,19 +44,128 @@
     </select>
   </div>
 
-  <!-- Grid Component -->
-  <app-server-grid
-    [columns]="columns"
-    [data]="reservations()"
-    [totalCount]="totalCount"
+  <!-- Native Table -->
+  <div class="relative overflow-hidden w-full border border-slate-200 dark:border-slate-800/40 rounded-2xl shadow-xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-md transition-all duration-300" [class.opacity-60]="loading()" [class.pointer-events-none]="loading()">
+    @if (loading()) {
+      <div class="absolute inset-0 flex items-center justify-center bg-slate-950/20 backdrop-blur-xs z-10">
+        <span class="px-4 py-2 bg-primary/20 text-primary font-bold text-sm rounded-xl border border-primary/30 animate-pulse">Loading...</span>
+      </div>
+    }
+    
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-left font-sans">
+        <thead>
+          <tr class="bg-slate-100/50 dark:bg-slate-950/30 border-b border-slate-200 dark:border-slate-800/60">
+            <th class="px-5 py-3 text-sm font-semibold text-slate-500 dark:text-slate-400 select-none cursor-pointer hover:text-slate-900 dark:hover:text-white transition-all" (click)="toggleSort('customername')">
+              Customer Name
+              @if (sortBy === 'customername') {
+                <span>{{ isAscending ? ' ▲' : ' ▼' }}</span>
+              }
+            </th>
+            <th class="px-5 py-3 text-sm font-semibold text-slate-500 dark:text-slate-400 select-none cursor-pointer hover:text-slate-900 dark:hover:text-white transition-all" (click)="toggleSort('restaurantname')">
+              Restaurant
+              @if (sortBy === 'restaurantname') {
+                <span>{{ isAscending ? ' ▲' : ' ▼' }}</span>
+              }
+            </th>
+            <th class="px-5 py-3 text-sm font-semibold text-slate-500 dark:text-slate-400 select-none cursor-pointer hover:text-slate-900 dark:hover:text-white transition-all" (click)="toggleSort('guestcount')">
+              Guests
+              @if (sortBy === 'guestcount') {
+                <span>{{ isAscending ? ' ▲' : ' ▼' }}</span>
+              }
+            </th>
+            <th class="px-5 py-3 text-sm font-semibold text-slate-500 dark:text-slate-400 select-none cursor-pointer hover:text-slate-900 dark:hover:text-white transition-all" (click)="toggleSort('reservationdate')">
+              Date & Time
+              @if (sortBy === 'reservationdate') {
+                <span>{{ isAscending ? ' ▲' : ' ▼' }}</span>
+              }
+            </th>
+            <th class="px-5 py-3 text-sm font-semibold text-slate-500 dark:text-slate-400 select-none">
+              Table / Type
+            </th>
+            <th class="px-5 py-3 text-sm font-semibold text-slate-500 dark:text-slate-400 select-none">
+              Requests
+            </th>
+            <th class="px-5 py-3 text-sm font-semibold text-slate-500 dark:text-slate-400 select-none">
+              Status
+            </th>
+            <th class="px-5 py-3 text-sm font-semibold text-slate-500 dark:text-slate-400">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (res of reservations(); track res.id || $index) {
+            <tr class="border-b border-slate-200/60 dark:border-slate-800/20 hover:bg-slate-100/30 dark:hover:bg-slate-800/10 transition-colors duration-150">
+              <td class="px-5 py-4 text-sm text-slate-700 dark:text-slate-300 font-semibold">{{ res.customerName }}</td>
+              <td class="px-5 py-4 text-sm text-slate-700 dark:text-slate-300">{{ res.restaurantName }}</td>
+              <td class="px-5 py-4 text-sm text-slate-700 dark:text-slate-300">{{ res.guestCount }}</td>
+              <td class="px-5 py-4 text-sm text-slate-700 dark:text-slate-300">
+                {{ res.reservationDate }} at {{ res.reservationTime }}
+              </td>
+              <td class="px-5 py-4 text-sm text-slate-700 dark:text-slate-300">
+                @if (res.tableNumber) {
+                  <span>{{ res.tableNumber }} ({{ res.tableTypeName }})</span>
+                } @else {
+                  <span class="text-slate-400 italic">Not Assigned</span>
+                }
+              </td>
+              <td class="px-5 py-4 text-sm text-slate-700 dark:text-slate-300 italic max-w-[180px] truncate" [title]="res.specialRequests">
+                {{ res.specialRequests || '-' }}
+              </td>
+              <td class="px-5 py-4 text-sm text-slate-700 dark:text-slate-300">
+                <app-status-badge [status]="res.status"></app-status-badge>
+              </td>
+              <td class="px-5 py-4 text-sm">
+                <div class="flex flex-wrap gap-2">
+                  @if (res.status === 'Pending') {
+                    <button 
+                      class="py-1.5 px-4 rounded-xl text-sm font-bold bg-primary hover:bg-primary-hover text-slate-950 shadow-md shadow-primary/20 hover:shadow-lg transition-all cursor-pointer"
+                      (click)="onAction('confirm', res)">
+                      Confirm
+                    </button>
+                  }
+                  @if (res.status === 'Confirmed') {
+                    <button 
+                      class="py-1.5 px-4 rounded-xl text-sm font-bold bg-primary hover:bg-primary-hover text-slate-950 shadow-md shadow-primary/20 hover:shadow-lg transition-all cursor-pointer"
+                      (click)="onAction('checkin', res)">
+                      Check-In
+                    </button>
+                  }
+                  @if (res.status === 'Checked-In') {
+                    <button 
+                      class="py-1.5 px-4 rounded-xl text-sm font-bold bg-primary hover:bg-primary-hover text-slate-950 shadow-md shadow-primary/20 hover:shadow-lg transition-all cursor-pointer"
+                      (click)="onAction('complete', res)">
+                      Complete
+                    </button>
+                  }
+                  @if (['Pending', 'Confirmed', 'Checked-In'].includes(res.status)) {
+                    <button 
+                      class="py-1.5 px-4 rounded-xl text-sm font-bold bg-red-500 hover:bg-red-650 text-white shadow-md shadow-red-500/10 hover:shadow-lg transition-all cursor-pointer"
+                      (click)="onAction('cancel', res)">
+                      Cancel
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="8" class="text-center py-8 text-slate-500 dark:text-slate-400 text-sm">
+                No records found.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Reusable Pagination Component -->
+  <app-pagination
     [pageNumber]="pageNumber()"
     [pageSize]="pageSize"
-    [loading]="loading()"
-    [actions]="gridActions"
-    (sort)="onSort($event)"
-    (pageChange)="onPageChange($event)"
-    (action)="onGridAction($event)">
-  </app-server-grid>
+    [totalCount]="totalCount"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
 
   <!-- Confirmation dialog for Actions -->
   @if (showConfirmDialog()) {

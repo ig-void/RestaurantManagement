@@ -3,33 +3,27 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableService } from '../../../core/services/table.service';
 import { LookupService } from '../../../core/services/lookup.service';
-import { ServerGridComponent, GridColumn } from '../../../shared/components/server-grid/server-grid.component';
-import { DynamicFormComponent, FormField } from '../../../shared/components/dynamic-form/dynamic-form.component';
+import { TableFormComponent } from './table-form/table-form.component';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import { StatusBadgeComponent } from '../../../shared/components/status-badge/status-badge.component';
 
 @Component({
   selector: 'app-tables-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule, ServerGridComponent, DynamicFormComponent, ConfirmDialogComponent],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    TableFormComponent, 
+    ConfirmDialogComponent, 
+    PaginationComponent, 
+    StatusBadgeComponent
+  ],
   templateUrl: './tables-admin.component.html'
 })
 export class TablesAdminComponent implements OnInit {
   private readonly tableService = inject(TableService);
   private readonly lookupService = inject(LookupService);
-
-  // Grid configs
-  protected readonly columns: GridColumn[] = [
-    { key: 'restaurantName', label: 'Restaurant' },
-    { key: 'tableNumber', label: 'Table Number', sortable: true },
-    { key: 'tableTypeName', label: 'Table Type' },
-    { key: 'seatingCapacity', label: 'Seating Capacity', sortable: true },
-    { key: 'status', label: 'Status', isStatus: true }
-  ];
-
-  protected readonly gridActions = [
-    { name: 'edit', label: 'Edit' },
-    { name: 'delete', label: 'Delete' }
-  ];
 
   // States
   protected readonly tables = signal<any[]>([]);
@@ -54,7 +48,6 @@ export class TablesAdminComponent implements OnInit {
   // Modal form states
   protected readonly showFormModal = signal<boolean>(false);
   protected isEditMode = false;
-  protected formFields: FormField[] = [];
   protected readonly editingData = signal<any>(null);
   protected readonly formLoading = signal<boolean>(false);
 
@@ -72,63 +65,12 @@ export class TablesAdminComponent implements OnInit {
     // Load Restaurants
     this.lookupService.getRestaurants().subscribe(res => {
       this.restaurants = res;
-      this.buildFormFields();
     });
 
     // Load Table Types
     this.lookupService.getTableTypes().subscribe(types => {
       this.tableTypes = types;
-      this.buildFormFields();
     });
-  }
-
-  buildFormFields(): void {
-    if (this.restaurants.length === 0 || this.tableTypes.length === 0) return;
-
-    const restaurantOptions = this.restaurants.map(r => ({ value: r.id, label: r.name }));
-    const typeOptions = this.tableTypes.map(t => ({ value: t.id, label: `${t.name} (Capacity: ${t.capacity})` }));
-
-    this.formFields = [
-      { 
-        key: 'restaurantId', 
-        label: 'Restaurant', 
-        type: 'select', 
-        required: true, 
-        options: restaurantOptions 
-      },
-      { 
-        key: 'tableNumber', 
-        label: 'Table Number', 
-        type: 'text', 
-        required: true 
-      },
-      { 
-        key: 'tableTypeId', 
-        label: 'Table Type', 
-        type: 'select', 
-        required: true, 
-        options: typeOptions 
-      },
-      { 
-        key: 'seatingCapacity', 
-        label: 'Seating Capacity', 
-        type: 'number', 
-        required: true, 
-        min: 1 
-      },
-      { 
-        key: 'status', 
-        label: 'Status', 
-        type: 'select', 
-        required: true, 
-        options: [
-          { value: 'Available', label: 'Available' },
-          { value: 'Reserved', label: 'Reserved' },
-          { value: 'Occupied', label: 'Occupied' },
-          { value: 'Maintenance', label: 'Maintenance' }
-        ] 
-      }
-    ];
   }
 
   loadTables(): void {
@@ -165,24 +107,19 @@ export class TablesAdminComponent implements OnInit {
     }, 400);
   }
 
-  onSort(event: { sortBy: string; isAscending: boolean }): void {
-    this.sortBy = event.sortBy;
-    this.isAscending = event.isAscending;
+  protected toggleSort(column: string): void {
+    if (this.sortBy === column) {
+      this.isAscending = !this.isAscending;
+    } else {
+      this.sortBy = column;
+      this.isAscending = true;
+    }
     this.loadTables();
   }
 
   onPageChange(page: number): void {
     this.pageNumber.set(page);
     this.loadTables();
-  }
-
-  // Grid Actions
-  onGridAction(event: { action: string; row: any }): void {
-    if (event.action === 'edit') {
-      this.openEditForm(event.row);
-    } else if (event.action === 'delete') {
-      this.openDeleteConfirmation(event.row);
-    }
   }
 
   openAddForm(): void {

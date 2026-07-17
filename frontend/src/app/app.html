@@ -2,32 +2,32 @@
   <!-- Navigation Header -->
   @if (authService.isAuthenticated()) {
     <header class="sticky top-0 z-40 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border-b border-slate-205 dark:border-slate-800/40 shadow-sm transition-colors duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
         <!-- Logo -->
         <div class="flex items-center gap-2">
-          <span class="text-2xl">🍽️</span>
-          <span class="text-xl font-extrabold text-primary tracking-tight">GourmetReserve</span>
+          <span class="text-3xl">🍽️</span>
+          <span class="text-2xl font-extrabold text-primary tracking-tight">GourmetReserve</span>
         </div>
-
+        
         <!-- Links -->
         <nav class="hidden md:flex space-x-6">
           @if (!authService.isManager()) {
-            <a routerLink="/customer/browse" routerLinkActive="text-primary font-bold border-b-2 border-primary" class="text-slate-650 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold py-5">Browse Restaurants</a>
-            <a routerLink="/customer/reservations" routerLinkActive="text-primary font-bold border-b-2 border-primary" class="text-slate-650 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold py-5">My Reservations</a>
+            <a routerLink="/customer/browse" routerLinkActive="text-primary font-bold border-b-2 border-primary" class="text-slate-650 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-base font-semibold py-6">Browse Restaurants</a>
+            <a routerLink="/customer/reservations" routerLinkActive="text-primary font-bold border-b-2 border-primary" class="text-slate-650 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-base font-semibold py-6">My Reservations</a>
           } @else {
-            <a routerLink="/manager/restaurants" routerLinkActive="text-primary font-bold border-b-2 border-primary" class="text-slate-655 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold py-5">Restaurants</a>
-            <a routerLink="/manager/tables" routerLinkActive="text-primary font-bold border-b-2 border-primary" class="text-slate-650 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold py-5">Tables</a>
-            <a routerLink="/manager/reservations" routerLinkActive="text-primary font-bold border-b-2 border-primary" class="text-slate-650 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-semibold py-5">Reservations Queue</a>
+            <a routerLink="/manager/restaurants" routerLinkActive="text-primary font-bold border-b-2 border-primary" class="text-slate-655 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-base font-semibold py-6">Restaurants</a>
+            <a routerLink="/manager/tables" routerLinkActive="text-primary font-bold border-b-2 border-primary" class="text-slate-650 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-base font-semibold py-6">Tables</a>
+            <a routerLink="/manager/reservations" routerLinkActive="text-primary font-bold border-b-2 border-primary" class="text-slate-650 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-base font-semibold py-6">Reservations Queue</a>
           }
         </nav>
 
         <!-- User Options & Theme Toggle -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-5">
           <!-- Theme Toggle Switch -->
-          <button
-            (click)="toggleTheme()"
-            class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
+          <button 
+            (click)="toggleTheme()" 
+            class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
             [title]="isDark() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
             @if (isDark()) {
               <span>☀️</span>
@@ -36,9 +36,9 @@
             }
           </button>
 
-          <span class="hidden sm:inline text-xs text-slate-500 dark:text-slate-400 font-medium">Hello, <strong class="text-slate-800 dark:text-slate-200 font-bold">{{ authService.currentUser()?.fullName }}</strong></span>
-          <button
-            class="py-1.5 px-3.5 rounded-xl border border-red-500/30 text-red-550 hover:bg-red-500 hover:text-white dark:text-red-400 dark:hover:bg-red-500/20 text-xs font-bold transition-all cursor-pointer"
+          <span class="hidden sm:inline text-sm text-slate-500 dark:text-slate-400 font-medium">Hello, <strong class="text-slate-800 dark:text-slate-200 font-bold">{{ authService.currentUser()?.fullName }}</strong></span>
+          <button 
+            class="py-2 px-4.5 rounded-xl border border-red-500/30 text-red-550 hover:bg-red-500 hover:text-white dark:text-red-400 dark:hover:bg-red-500/20 text-sm font-bold transition-all cursor-pointer" 
             (click)="logout()">
             Logout
           </button>
@@ -48,16 +48,16 @@
   } @else {
     <!-- Guest Navbar (Login / Register view) -->
     <header class="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/40 shadow-sm transition-colors duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <span class="text-2xl">🍽️</span>
-          <span class="text-xl font-extrabold text-primary tracking-tight">GourmetReserve</span>
+          <span class="text-3xl">🍽️</span>
+          <span class="text-2xl font-extrabold text-primary tracking-tight">GourmetReserve</span>
         </div>
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-5">
           <!-- Theme Toggle Switch -->
-          <button
-            (click)="toggleTheme()"
-            class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
+          <button 
+            (click)="toggleTheme()" 
+            class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer"
             [title]="isDark() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
             @if (isDark()) {
               <span>☀️</span>
@@ -66,8 +66,8 @@
             }
           </button>
 
-          <a routerLink="/login" routerLinkActive="text-primary" class="text-slate-650 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-100 transition-colors text-sm font-semibold">Login</a>
-          <a routerLink="/register" class="py-1.5 px-4 rounded-xl bg-primary hover:bg-primary-hover text-slate-950 font-bold text-sm shadow-md shadow-primary/10 transition-all">Register</a>
+          <a routerLink="/login" routerLinkActive="text-primary" class="text-slate-650 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-100 transition-colors text-base font-semibold">Login</a>
+          <a routerLink="/register" class="py-2 px-5 rounded-xl bg-primary hover:bg-primary-hover text-slate-950 font-bold text-base shadow-md shadow-primary/10 transition-all">Register</a>
         </div>
       </div>
     </header>

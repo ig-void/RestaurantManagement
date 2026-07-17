@@ -1,12 +1,12 @@
 <div class="max-w-7xl mx-auto px-4 py-8 relative">
   <div class="aurora-glow-1"></div>
   <div class="aurora-glow-2"></div>
-  
+
   <h2 class="text-3xl font-extrabold text-slate-800 dark:text-slate-100 mb-1.5 tracking-tight">Browse Restaurants</h2>
   <p class="text-sm text-slate-500 dark:text-slate-400 mb-8 font-medium">Find your favorite cuisines and request table reservations in real-time</p>
 
   <!-- Reusable Filter Component -->
-  <app-search-filter 
+  <app-search-filter
     placeholder="Search by restaurant name, city or address..."
     [dropdowns]="filters()"
     (search)="onSearch($event)"
@@ -28,10 +28,10 @@
   @if (!loading() && restaurants().length > 0) {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
       @for (r of restaurants(); track r.id) {
-        <div 
+        <div
           [class.opacity-50]="r.status === 'Inactive'"
           class="glass-card flex flex-col h-full p-6">
-          
+
           <div class="flex justify-between items-start mb-4 gap-2">
             <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100">{{ r.name }}</h3>
             <app-status-badge [status]="r.status"></app-status-badge>
@@ -52,7 +52,7 @@
             </div>
             <div class="flex justify-between">
               <span class="text-slate-500 dark:text-slate-400 font-medium">Avg Cost:</span>
-              <span class="text-slate-800 dark:text-slate-200 font-semibold">{{ r.averageCostPerPerson | currency }} per person</span>
+              <span class="text-slate-800 dark:text-slate-200 font-semibold">{{ r.averageCostPerPerson | currency:'INR' }} per person</span>
             </div>
             <div class="flex justify-between">
               <span class="text-slate-500 dark:text-slate-400 font-medium">Available Tables:</span>
@@ -62,8 +62,8 @@
             </div>
           </div>
 
-          <button 
-            class="w-full py-2.5 px-4 rounded-xl bg-primary hover:bg-primary-hover disabled:bg-slate-350 dark:disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-slate-950 font-bold text-sm shadow-md shadow-primary/10 transition-all cursor-pointer" 
+          <button
+            class="w-full py-3 px-5 rounded-2xl bg-primary hover:bg-primary-hover disabled:bg-slate-350 dark:disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-slate-950 font-bold text-base shadow-md shadow-primary/10 transition-all cursor-pointer"
             [disabled]="r.status === 'Inactive'"
             (click)="openReservationModal(r)">
             {{ r.status === 'Inactive' ? 'Booking Disabled' : 'Reserve Table' }}
@@ -76,16 +76,16 @@
   <!-- Pagination -->
   @if (!loading() && totalPages() > 1) {
     <div class="flex justify-center items-center gap-6 mt-8">
-      <button 
-        class="py-1.5 px-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer" 
-        [disabled]="pageNumber() === 1" 
+      <button
+        class="py-2 px-4 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer"
+        [disabled]="pageNumber() === 1"
         (click)="onPageChange(pageNumber() - 1)">
         Previous
       </button>
       <span class="text-sm text-slate-500 dark:text-slate-400 font-medium">Page {{ pageNumber() }} of {{ totalPages() }}</span>
-      <button 
-        class="py-1.5 px-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer" 
-        [disabled]="pageNumber() === totalPages()" 
+      <button
+        class="py-2 px-4 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer"
+        [disabled]="pageNumber() === totalPages()"
         (click)="onPageChange(pageNumber() + 1)">
         Next
       </button>
@@ -99,7 +99,7 @@
     <div class="glass-card max-w-[500px] w-[90%] p-8" (click)="$event.stopPropagation()">
       <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-1 leading-tight">Request Table Reservation</h3>
       <p class="text-xs text-slate-500 dark:text-slate-400 mb-6 font-medium">
-        Submit your request for <strong>{{ selectedRestaurant()?.name }}</strong>. 
+        Submit your request for <strong>{{ selectedRestaurant()?.name }}</strong>.
         The operating hours are {{ selectedRestaurant()?.openingTime }} - {{ selectedRestaurant()?.closingTime }}.
       </p>
 
@@ -118,9 +118,9 @@
         <!-- Guest Count -->
         <div class="flex flex-col gap-1">
           <label for="guestCount" class="form-label-field">Guest Count (1 - 10)</label>
-          <input 
-            type="number" 
-            id="guestCount" 
+          <input
+            type="number"
+            id="guestCount"
             formControlName="guestCount"
             class="form-input-field" />
           @if (reservationForm.get('guestCount')?.invalid && (reservationForm.get('guestCount')?.dirty || reservationForm.get('guestCount')?.touched)) {
@@ -133,9 +133,9 @@
         <!-- Reservation Date -->
         <div class="flex flex-col gap-1">
           <label for="reservationDate" class="form-label-field">Reservation Date (Next 30 days)</label>
-          <input 
-            type="date" 
-            id="reservationDate" 
+          <input
+            type="date"
+            id="reservationDate"
             formControlName="reservationDate"
             [min]="minDate"
             [max]="maxDate"
@@ -150,9 +150,9 @@
         <!-- Reservation Time -->
         <div class="flex flex-col gap-1">
           <label for="reservationTime" class="form-label-field">Reservation Time</label>
-          <input 
-            type="time" 
-            id="reservationTime" 
+          <input
+            type="time"
+            id="reservationTime"
             formControlName="reservationTime"
             class="form-input-field" />
           @if (reservationForm.get('reservationTime')?.invalid && (reservationForm.get('reservationTime')?.dirty || reservationForm.get('reservationTime')?.touched)) {
@@ -165,25 +165,25 @@
         <!-- Special Requests -->
         <div class="flex flex-col gap-1">
           <label for="specialRequests" class="form-label-field">Special Requests (Optional)</label>
-          <textarea 
-            id="specialRequests" 
+          <textarea
+            id="specialRequests"
             formControlName="specialRequests"
-            class="form-input-field" 
+            class="form-input-field"
             rows="3"
             placeholder="e.g. Need high chair, window seat, allergy notes..."></textarea>
         </div>
 
         <div class="flex justify-end gap-3 mt-4">
-          <button 
-            type="button" 
-            class="py-2 px-4 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-750 dark:text-slate-300 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer" 
-            (click)="closeModal()" 
+          <button
+            type="button"
+            class="py-2.5 px-5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-750 dark:text-slate-300 font-semibold text-base hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+            (click)="closeModal()"
             [disabled]="modalLoading()">
             Cancel
           </button>
-          <button 
-            type="submit" 
-            class="py-2 px-5 rounded-xl bg-primary hover:bg-primary-hover text-slate-950 font-bold text-sm shadow-md shadow-primary/20 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer" 
+          <button
+            type="submit"
+            class="py-2.5 px-6 rounded-xl bg-primary hover:bg-primary-hover text-slate-950 font-bold text-base shadow-md shadow-primary/20 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
             [disabled]="reservationForm.invalid || modalLoading()">
             {{ modalLoading() ? 'Submitting...' : 'Submit Request' }}
           </button>
